@@ -1,0 +1,3 @@
+-- Dev-only fixtures for `supabase start` (local). NOT the ~300-item dictionary
+-- seed — that's a separate, reviewed dataset produced by pipeline/seed-dictionary
+-- (T0.4). Left empty until T0.2 migrations exist to seed against.

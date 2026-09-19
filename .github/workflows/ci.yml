@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ios:
+    name: iOS (SwiftLint + build + test)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 26
+        run: sudo xcode-select -s /Applications/Xcode_26.0.app
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Install SwiftLint
+        run: brew install swiftlint
+      - name: SwiftLint
+        run: swiftlint lint --strict --config .swiftlint.yml
+      - name: Generate Xcode project
+        working-directory: ios/FridgeChef
+        run: |
+          cp -n Debug.xcconfig.example Debug.xcconfig
+          cp -n Release.xcconfig.example Release.xcconfig
+          xcodegen generate
+      - name: Build & test
+        working-directory: ios/FridgeChef
+        run: |
+          xcodebuild -project FridgeChef.xcodeproj -scheme FridgeChef \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
+            build test
+
+  supabase:
+    name: Supabase (migrations + pgTAP)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start local stack (applies supabase/migrations/*.sql)
+        run: supabase start
+      # `supabase test db` (pgTAP under supabase/tests/) lands with T0.2/T0.3;
+      # this job is intentionally minimal until then (AGENTS.md: no code ahead of its ticket).
+
+  functions:
+    name: Edge Functions & pipeline (deno)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Lint
+        run: |
+          [ -f deno.json ] && deno lint || echo "no deno.json yet (pipeline/ scaffolded in T1.2)"

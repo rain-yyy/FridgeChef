@@ -1,0 +1,15 @@
+included:
+  - ios/FridgeChef/App
+  - ios/FridgeChef/Core
+  - ios/FridgeChef/Data
+  - ios/FridgeChef/Domain
+  - ios/FridgeChef/Features
+  - ios/FridgeChef/Tests
+excluded:
+  - ios/FridgeChef/.build
+  - ios/FridgeChef/FridgeChef.xcodeproj
+
+opt_in_rules:
+  - force_unwrapping
+
+force_unwrapping: error

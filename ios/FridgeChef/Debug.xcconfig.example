@@ -1,0 +1,7 @@
+// Copy this file to Debug.xcconfig (gitignored) and fill in real values.
+// "//" starts a comment in xcconfig, so URLs use the $() empty-macro trick to escape it.
+
+SUPABASE_URL = http:/$()/127.0.0.1:54321
+// Run `supabase start` (requires Docker Desktop running), then `supabase status`
+// to print the local anon key — paste it below.
+SUPABASE_ANON_KEY = REPLACE_WITH_LOCAL_ANON_KEY_FROM_SUPABASE_STATUS
