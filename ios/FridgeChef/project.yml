@@ -54,6 +54,9 @@ targets:
       - path: Tests
     dependencies:
       - target: FridgeChef
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
 
 schemes:
   FridgeChef:
