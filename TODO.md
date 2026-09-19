@@ -1,19 +1,20 @@
 # FridgeChef 手动 TODO 清单
 
-来源：2026-09-19 批准的开发计划（原存于 Claude 的本地 plan 目录，现同步进仓库方便跟踪）。
-按“何时需要”分组，勾选状态是我根据目前掌握的信息标注的，不确定的保持未勾选，请你核对。
+来源：2026-09-19 批准的开发计划。按"何时需要"分组，勾选状态是根据目前掌握的信息标注的。
 
-## A. 立即需要（T0.1 已完成，以下是状态回顾）
+> **2026-09-19 更新**：后续实现工作交给其他协作者处理。Claude 从现在起只负责维护本文件和
+> `docs/PLAN.md` 的最新状态（决策落地后同步过来），不再主动推进新 ticket 或写代码，除非你明确再要求。
+
+## A. 立即需要
 
 - [x] 决定项目名称 — FridgeChef
-- [ ] 决定 Bundle ID 正式值 / 仓库可见性 — 当前 Bundle ID 是占位符 `com.fridgechef.app`，等注册 Apple Developer 账号、确定 Team 后可能要改
-- [x] 创建 GitHub 仓库并链接 — https://github.com/rain-yyy/FridgeChef.git，T0.1 三个 commit 已推送
-- [ ] 注册并激活 **Apple Developer Program**（付费）—— 真机 Sign in with Apple（Spike S3）、TestFlight 都需要，目前还没做
-- [x] 注册 Supabase 账号并创建项目 — 项目 `FridgeChef`，ref `rthxwbwzplwhxfhfsjad`，已提供 secret key
-- [ ] 补充 Supabase **anon/publishable key**（`sb_publishable_...`，Dashboard → Settings → API）—— 目前只有 secret key，不能进 App。已把 `ios/FridgeChef/Debug.xcconfig` 和 `Release.xcconfig` 切到云端 URL，但 `SUPABASE_ANON_KEY` 还是占位符，等这个 key 填好之后 App 才能真正连上云端
+- [ ] Bundle ID 正式值 —— Bundle ID 是 App 在 App Store / 系统里的唯一标识符（反向域名格式，如 `com.fridgechef.app`）。目前用的是占位符 `com.fridgechef.app`，**不阻塞开发**，可以先用着，正式上架前再改成你 Apple Developer 账号下的真实值
+- [x] 创建 GitHub 仓库并链接、设为 public — https://github.com/rain-yyy/FridgeChef.git（已确认 public），T0.1 三个 commit + 后续文档 commit 已推送
+- [ ] 注册 **Apple Developer Program**（付费）—— **不是立即需要**：用免费 Personal Team 就能在自己的真机上跑 App 做日常开发测试，不需要付费订阅。付费账号只在这两个场景才是硬需求：① **TestFlight** 分发给同学试用；② **Sign in with Apple**（Spike S3）能不能用免费账号做，到时候要再验证一次，不确定
+- [x] Supabase 项目已创建并接入 — 项目 `FridgeChef`，ref `rthxwbwzplwhxfhfsjad`；`Debug.xcconfig`/`Release.xcconfig` 里的云端 URL + anon/publishable key 已由你填好（顺手修了一个坑：xcconfig 里 `//` 是注释符，你贴的 URL 里的 `//` 会把后面截断，已经加回 `$()` 转义，两个文件都改了，实际连接值没变）
 - [x] 本机安装 Xcode 26 / Supabase CLI / Deno — 已验证（T0.1 的 build/test/CI 都跑通了）
 - [x] 确认 P0 用哪家 LLM 供应商 — OpenRouter；具体模型名称你说后面再填
-- [ ] 回答：一个人做还是有协作者？每周大概能投入多少小时？—— 还没答复，会影响排期是否要压缩范围
+- [x] 一个人做还是有协作者 —— 已回答：T0.1 完成后交给其他协作者接手，Claude 之后只维护文档
 
 ## B. P0 阶段内需要（不阻塞开工，会卡在对应 ticket）
 
