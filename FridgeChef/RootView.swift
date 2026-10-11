@@ -12,7 +12,7 @@ enum AppTab: Hashable {
 
 /// App 根视图:冰箱 / 做饭 / 设置三个标签页
 struct RootView: View {
-    @State private var selection: AppTab = .fridge // 默认选中fridge标签
+    @State private var selection: AppTab = Self.initialTab // 默认选中fridge标签
 
     var body: some View {
         TabView(selection: $selection) {
@@ -22,14 +22,12 @@ struct RootView: View {
             .tabItem { tabLabel("tab.fridge", icon: .iconFridge, selectedIcon: .tabFridgeSelected, tab: .fridge) }
             .tag(AppTab.fridge)
 
-            NavigationStack {
-                placeholder(title: "cook.title", icon: .iconCook)
-            }
+            CookView(selectedTab: $selection) // 做饭页自带 NavigationStack(推荐结果要 push)
             .tabItem { tabLabel("tab.cook", icon: .iconCook, selectedIcon: .tabCookSelected, tab: .cook) }
             .tag(AppTab.cook)
 
             NavigationStack {
-                placeholder(title: "settings.title", icon: .iconSettings)
+                SettingsView()
             }
             .tabItem { tabLabel("tab.settings", icon: .iconSettings, selectedIcon: .tabSettingsSelected, tab: .settings) }
             .tag(AppTab.settings)
@@ -46,16 +44,22 @@ struct RootView: View {
         }
     }
 
-    // 创建占位符视图
-    private func placeholder(title: LocalizedStringKey, icon: ImageResource) -> some View {
-        ScrollView {
-            PageHeader(title: title, icon: icon).padding(16)
+    // 启动时选中的标签;DEBUG 下可用启动参数 -debugTab cook|settings 指定(方便截图)
+    private static var initialTab: AppTab {
+        #if DEBUG
+        switch UserDefaults.standard.string(forKey: "debugTab") {
+        case "cook": return .cook
+        case "settings": return .settings
+        default: break
         }
-        .pageBackground()
+        #endif
+        return .fridge
     }
 }
 
 #Preview {
     RootView()
         .modelContainer(PreviewData.container())
+        .environment(AISettings())
+        .environment(MenuStore(fileURL: nil))
 }

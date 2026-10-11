@@ -32,6 +32,8 @@ COLORS = {
     "Ink":          ("#3A2E28", "#EFE4D3"),  # outlines, primary text, tint
     "Cocoa":        ("#76675C", "#B3A493"),  # secondary text
     "Honey":        ("#F4C95D", "#E2B64E"),  # primary button
+    "HoneySoft":    ("#FBEBC4", "#4A3D22"),  # notice card background (e.g. "API key not set")
+    "InkSoft":      ("#5E5148", "#D8CBB9"),  # body text on HoneySoft
     "OnPastel":     ("#3A2E28", "#2A211C"),  # text/icons drawn on pastel or honey fills
     "Expired":      ("#EE8C7E", "#C9695C"),
     "Soon":         ("#F9C79A", "#D9A574"),

@@ -14,3 +14,7 @@ build/
 
 ## Python (scripts/)
 __pycache__/
+
+## Secrets (API keys stay in the iOS Keychain; never commit local key files)
+.env
+*.secret
