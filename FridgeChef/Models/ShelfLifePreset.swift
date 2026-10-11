@@ -1,6 +1,18 @@
 import Foundation
 
 struct ShelfLifePreset {
+    /// Where a fridge shelf life comes from; the item editor explains it to the user.
+    enum Source: Equatable {
+        case name(days: Int)
+        case category(days: Int)
+
+        var days: Int {
+            switch self {
+            case .name(let days), .category(let days): days
+            }
+        }
+    }
+
     /// Days in the fridge, looked up by lowercased ingredient name.
     private static let byName: [String: Int] = [
         "西红柿": 7, "tomato": 7,
@@ -9,25 +21,31 @@ struct ShelfLifePreset {
         "牛奶": 7, "milk": 7,
     ]
 
-    private static func defaultDays(category: FoodCategory, storage: StorageLocation) -> Int {
+    static func defaultDays(category: FoodCategory) -> Int {
         switch category {
+        case .meat: 3
+        case .semiPrepared: 5
         case .vegetable: 5
-        case .meat: 2
-        case .semiPrepared: 3
         case .eggDairy: 7
         }
     }
 
-    /// Returns the expiry date, or nil for frozen food.
+    /// Fridge shelf life: a name preset if one matches, otherwise the category default.
+    static func source(name: String, category: FoodCategory) -> Source {
+        let key = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if let days = byName[key] { return .name(days: days) }
+        return .category(days: defaultDays(category: category))
+    }
+
+    /// Returns the expiry date counted from `startDate`, or nil for frozen food.
     static func expiryDate(
         name: String,
         category: FoodCategory,
         storage: StorageLocation,
-        addedDate: Date
+        startDate: Date
     ) -> Date? {
         guard storage == .fridge else { return nil }
-        let key = name.trimmingCharacters(in: .whitespaces).lowercased()
-        let days = byName[key] ?? defaultDays(category: category, storage: storage)
-        return Calendar.current.date(byAdding: .day, value: days, to: addedDate)
+        let days = source(name: name, category: category).days
+        return Calendar.current.date(byAdding: .day, value: days, to: startDate)
     }
 }

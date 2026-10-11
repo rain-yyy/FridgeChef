@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		54F871EB307B777600BAF7B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 548BC366307AEE7F00706C3E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 548BC36D307AEE7F00706C3E;
+			remoteInfo = FridgeChef;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		548BC36E307AEE7F00706C3E /* FridgeChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FridgeChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		54F871E7307B777600BAF7B5 /* FridgeChefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FridgeChefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = FridgeChef;
 			sourceTree = "<group>";
 		};
+		54F871E8307B777600BAF7B5 /* FridgeChefTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FridgeChefTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		548BC36B307AEE7F00706C3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		54F871E4307B777600BAF7B5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				548BC370307AEE7F00706C3E /* FridgeChef */,
+				54F871E8307B777600BAF7B5 /* FridgeChefTests */,
 				548BC36F307AEE7F00706C3E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				548BC36E307AEE7F00706C3E /* FridgeChef.app */,
+				54F871E7307B777600BAF7B5 /* FridgeChefTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 548BC36E307AEE7F00706C3E /* FridgeChef.app */;
 			productType = "com.apple.product-type.application";
 		};
+		54F871E6307B777600BAF7B5 /* FridgeChefTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 54F871EF307B777600BAF7B5 /* Build configuration list for PBXNativeTarget "FridgeChefTests" */;
+			buildPhases = (
+				54F871E3307B777600BAF7B5 /* Sources */,
+				54F871E4307B777600BAF7B5 /* Frameworks */,
+				54F871E5307B777600BAF7B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				54F871EC307B777600BAF7B5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				54F871E8307B777600BAF7B5 /* FridgeChefTests */,
+			);
+			name = FridgeChefTests;
+			packageProductDependencies = (
+			);
+			productName = FridgeChefTests;
+			productReference = 54F871E7307B777600BAF7B5 /* FridgeChefTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					548BC36D307AEE7F00706C3E = {
 						CreatedOnToolsVersion = 26.0;
+					};
+					54F871E6307B777600BAF7B5 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = 548BC36D307AEE7F00706C3E;
 					};
 				};
 			};
@@ -101,12 +153,20 @@
 			projectRoot = "";
 			targets = (
 				548BC36D307AEE7F00706C3E /* FridgeChef */,
+				54F871E6307B777600BAF7B5 /* FridgeChefTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		548BC36C307AEE7F00706C3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		54F871E5307B777600BAF7B5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -123,7 +183,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		54F871E3307B777600BAF7B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		54F871EC307B777600BAF7B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 548BC36D307AEE7F00706C3E /* FridgeChef */;
+			targetProxy = 54F871EB307B777600BAF7B5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		548BC379307AEE8000706C3E /* Debug */ = {
@@ -307,6 +382,48 @@
 			};
 			name = Release;
 		};
+		54F871ED307B777600BAF7B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.livelive.FridgeChefTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FridgeChef.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FridgeChef";
+			};
+			name = Debug;
+		};
+		54F871EE307B777600BAF7B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.livelive.FridgeChefTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FridgeChef.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FridgeChef";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -324,6 +441,15 @@
 			buildConfigurations = (
 				548BC37C307AEE8000706C3E /* Debug */,
 				548BC37D307AEE8000706C3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		54F871EF307B777600BAF7B5 /* Build configuration list for PBXNativeTarget "FridgeChefTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54F871ED307B777600BAF7B5 /* Debug */,
+				54F871EE307B777600BAF7B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

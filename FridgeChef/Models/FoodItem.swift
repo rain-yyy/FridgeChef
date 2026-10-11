@@ -3,6 +3,8 @@ import SwiftData
 
 @Model
 final class FoodItem {
+    /// Stable identity; saved menu plans refer to items by it.
+    var id: UUID = UUID()
     var name: String
     // Stored as raw strings: enums are unreliable inside #Predicate.
     var categoryRaw: String
@@ -25,6 +27,10 @@ final class FoodItem {
     var unit: QuantityUnit {
         get { QuantityUnit(rawValue: unitRaw) ?? .item }
         set { unitRaw = newValue.rawValue }
+    }
+
+    var expiryStatus: ExpiryStatus {
+        ExpiryStatus(storage: storage, daysLeft: daysLeft)
     }
 
     /// Whole days until expiry (negative if expired); nil when there is no expiry date.
@@ -51,6 +57,7 @@ final class FoodItem {
         self.unitRaw = unit.rawValue
         self.quantity = quantity
         self.addedDate = addedDate
-        self.expiryDate = expiryDate
+        self.expiryDate = expiryDate ?? ShelfLifePreset.expiryDate(
+            name: name, category: category, storage: storage, startDate: addedDate)
     }
 }
