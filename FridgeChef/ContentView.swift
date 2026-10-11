@@ -9,53 +9,45 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var items: [FoodItem]
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
+        List(items) { item in
+            HStack {
+                Text(item.name)
+                Spacer()
+                Text("\(item.quantity.formatted()) \(String(localized: item.unit.displayName))")
+                    .foregroundStyle(.secondary)
+                Text(daysLeftText(item.daysLeft))
+                    .monospacedDigit()
+                    .frame(minWidth: 60, alignment: .trailing)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
         }
     }
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
+    private func daysLeftText(_ days: Int?) -> String {
+        guard let days else { return "—" }
+        return "\(days)d"
     }
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+    let container = try! ModelContainer(
+        for: FoodItem.self,
+        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+    )
+    let samples: [(String, FoodCategory, StorageLocation, QuantityUnit, Double)] = [
+        ("牛肉", .meat, .freezer, .piece, 2),
+        ("西红柿", .vegetable, .fridge, .item, 3),
+        ("鸡蛋", .eggDairy, .fridge, .box, 0.5),
+        ("菠菜", .vegetable, .fridge, .bunch, 1),
+    ]
+    for (name, category, storage, unit, quantity) in samples {
+        container.mainContext.insert(FoodItem(
+            name: name, category: category, storage: storage, unit: unit, quantity: quantity,
+            expiryDate: ShelfLifePreset.expiryDate(
+                name: name, category: category, storage: storage, addedDate: .now)
+        ))
+    }
+    return ContentView().modelContainer(container)
 }
