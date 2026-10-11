@@ -10,11 +10,19 @@ import SwiftData
 
 @main
 struct FridgeChefApp: App {
+
+    // 初始化
+    init() {
+        AppFont.register() // 注册自定义字体
+    }
+
+    // 初始化模型容器
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            FoodItem.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+            FoodItem.self, // 所有需要存储的数据模型
+        ]) 
+
+        let modelConfiguration   = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -27,6 +35,6 @@ struct FridgeChefApp: App {
         WindowGroup {
             RootView()
         }
-        .modelContainer(sharedModelContainer)
+        .modelContainer(sharedModelContainer) // 挂载模型容器
     }
 }
