@@ -18,6 +18,13 @@ struct FridgeChefApp: App {
 
     // 初始化模型容器
     var sharedModelContainer: ModelContainer = {
+        #if DEBUG
+        // 调试用:启动参数 -useSampleData 时用内存中的示例数据,不碰真实存储
+        if ProcessInfo.processInfo.arguments.contains("-useSampleData") {
+            return PreviewData.container()
+        }
+        #endif
+
         let schema = Schema([
             FoodItem.self, // 所有需要存储的数据模型
         ]) 

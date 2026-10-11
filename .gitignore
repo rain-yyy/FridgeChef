@@ -2,3 +2,15 @@
 
 ## Design Documents
 Design/
+
+## macOS
+.DS_Store
+
+## Xcode: per-user settings and build output
+xcuserdata/
+DerivedData/
+build/
+*.xcresult
+
+## Python (scripts/)
+__pycache__/

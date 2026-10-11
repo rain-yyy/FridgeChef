@@ -16,13 +16,8 @@ struct RootView: View {
 
     var body: some View {
         TabView(selection: $selection) {
-            NavigationStack { // 
-                StyleGallery()
-                    .toolbar {
-                        Button {
-                            // 添加食材的逻辑
-                        } label: { Image(.iconAdd).resizable().frame(width: 22, height: 22) } // 将图片固定为22x22
-                    }
+            NavigationStack {
+                FridgeView() // 冰箱页自带顶部「+」按钮和标题
             }
             .tabItem { tabLabel("tab.fridge", icon: .iconFridge, selectedIcon: .tabFridgeSelected, tab: .fridge) }
             .tag(AppTab.fridge)
@@ -62,5 +57,5 @@ struct RootView: View {
 
 #Preview {
     RootView()
-        .modelContainer(for: FoodItem.self, inMemory: true)
+        .modelContainer(PreviewData.container())
 }
