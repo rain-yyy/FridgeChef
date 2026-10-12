@@ -33,7 +33,7 @@ struct PageHeader: View {
 
 extension View {
     /// Inline navigation title in the hand-drawn font, for pushed pages.
-    func handwrittenInlineTitle(_ title: LocalizedStringKey) -> some View {
+    func handwrittenInlineTitle(_ title: LocalizedStringResource) -> some View {
         self
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -41,6 +41,7 @@ extension View {
                     Text(title)
                         .font(.handwritten(19, relativeTo: .headline))
                         .foregroundStyle(Color.ink)
+                        .accessibilityAddTraits(.isHeader)
                 }
             }
     }

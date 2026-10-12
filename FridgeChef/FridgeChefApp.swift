@@ -18,6 +18,12 @@ struct FridgeChefApp: App {
     // 初始化
     init() {
         AppFont.register() // 注册自定义字体
+        #if DEBUG
+        // 示例数据模式下,推荐结果也用一份和设计稿一致的示例菜单(只在内存里)
+        if Self.usesSampleData {
+            _menuStore = State(initialValue: PreviewData.menuStore(for: sharedModelContainer))
+        }
+        #endif
     }
 
     // 初始化模型容器

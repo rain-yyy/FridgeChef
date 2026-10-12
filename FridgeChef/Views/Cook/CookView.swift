@@ -3,6 +3,7 @@ import SwiftData
 
 enum CookRoute: Hashable {
     case results
+    case plan(UUID)
 }
 
 /// The cook tab: pick cuisine and servings, see what should be used soon, generate a menu.
@@ -11,6 +12,7 @@ struct CookView: View {
 
     @Environment(AISettings.self) private var settings
     @Environment(MenuStore.self) private var menuStore
+    @Environment(\.showToast) private var showToast
     @Query private var items: [FoodItem]
     @AppStorage("cook.cuisine") private var cuisine: Cuisine = .chinese
     @AppStorage("cook.servings") private var servings = 2
@@ -51,15 +53,24 @@ struct CookView: View {
             .safeAreaInset(edge: .bottom) { generateBar }
             .navigationDestination(for: CookRoute.self) { route in
                 switch route {
-                case .results: ResultsView(selectedTab: $selectedTab)
+                case .results:
+                    ResultsView(selectedTab: $selectedTab)
+                case .plan(let id):
+                    if let result = menuStore.result, let index = result.plans.firstIndex(where: { $0.id == id }) {
+                        PlanDetailView(result: result, index: index, onFinished: finishCooking)
+                    }
                 }
             }
         }
         #if DEBUG
-        // For simulator screenshots: `-debugGenerate YES` starts a generation on launch.
+        // For simulator screenshots: `-debugGenerate YES` starts a generation on launch;
+        // `-debugCookPath results|plan|deduct` opens the saved result, its first plan, or the deduction sheet.
         .onAppear {
-            if UserDefaults.standard.bool(forKey: "debugGenerate"), settings.isConfigured, path.isEmpty {
+            guard path.isEmpty else { return }
+            if UserDefaults.standard.bool(forKey: "debugGenerate"), settings.isConfigured {
                 generate()
+            } else if let route = UserDefaults.standard.string(forKey: "debugCookPath"), let result = menuStore.result {
+                path = route == "results" ? [.results] : [.results, .plan(result.plans[0].id)]
             }
         }
         #endif
@@ -213,6 +224,15 @@ struct CookView: View {
             .font(.handwritten(20))
             .foregroundStyle(Color.ink)
             .accessibilityAddTraits(.isHeader)
+    }
+
+    /// After "做完了" → confirm: back to the cook root, switch to the fridge, and say what changed.
+    private func finishCooking(_ summary: Deduction.Summary) {
+        path = []
+        selectedTab = .fridge
+        showToast(summary.removed > 0
+            ? String(localized: "deduct.toast.removed \(summary.deducted) \(summary.removed)")
+            : String(localized: "deduct.toast \(summary.deducted)"))
     }
 
     private func generate() {

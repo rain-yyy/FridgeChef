@@ -591,6 +591,302 @@
         }
       }
     },
+    "deduct.after.left %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left after this"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "扣减后剩 %@"
+          }
+        }
+      }
+    },
+    "deduct.after.removed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used up — will be removed from the fridge"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用完了，会从冰箱移除"
+          }
+        }
+      }
+    },
+    "deduct.after.skipped": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not deducted this time"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这次不扣减"
+          }
+        }
+      }
+    },
+    "deduct.confirm %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Deduct %lld Item"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Deduct %lld Items"
+                }
+              }
+            }
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "确认扣减 %lld 项"
+          }
+        }
+      }
+    },
+    "deduct.confirm.remove %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deduct %1$lld · Remove %2$lld"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "确认扣减 %1$lld 项 · 移除 %2$lld 项"
+          }
+        }
+      }
+    },
+    "deduct.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None of these ingredients are in your fridge anymore."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这些食材已经不在冰箱里了。"
+          }
+        }
+      }
+    },
+    "deduct.have %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Have %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "现有 %@"
+          }
+        }
+      }
+    },
+    "deduct.intro %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Based on %@, these amounts will come out of your fridge. Adjust if you used more or less, and uncheck anything you didn't use."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按%@的用量，下面这些会从冰箱里扣掉。实际用多用少都可以调，没用上的取消勾选。"
+          }
+        }
+      }
+    },
+    "deduct.less": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deduct 0.5 less"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "少扣 0.5"
+          }
+        }
+      }
+    },
+    "deduct.more": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deduct 0.5 more"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "多扣 0.5"
+          }
+        }
+      }
+    },
+    "deduct.skip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip and Go Back"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不扣减，直接返回"
+          }
+        }
+      }
+    },
+    "deduct.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirm Usage"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "确认扣减"
+          }
+        }
+      }
+    },
+    "deduct.toast %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Updated %lld item"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Updated %lld items"
+                }
+              }
+            }
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已扣减 %lld 项食材"
+          }
+        }
+      }
+    },
+    "deduct.toast.removed %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updated %1$lld, removed %2$lld"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已扣减 %1$lld 项，移除 %2$lld 项"
+          }
+        }
+      }
+    },
+    "deduct.toggle %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deduct %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "扣减 %@"
+          }
+        }
+      }
+    },
+    "deduct.willRemove": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Will remove"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将移除"
+          }
+        }
+      }
+    },
     "editor.addedDate": {
       "extractionState": "manual",
       "localizations": {
@@ -1366,6 +1662,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "共 %lld 样"
+          }
+        }
+      }
+    },
+    "plan.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done Cooking"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "做完了"
+          }
+        }
+      }
+    },
+    "plan.extras": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also need"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "需另备"
+          }
+        }
+      }
+    },
+    "plan.fromFridge": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From your fridge"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "冰箱里的食材"
+          }
+        }
+      }
+    },
+    "plan.soonTag": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use soon"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "快过期"
           }
         }
       }

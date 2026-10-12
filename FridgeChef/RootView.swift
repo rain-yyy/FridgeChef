@@ -13,6 +13,7 @@ enum AppTab: Hashable {
 /// App 根视图:冰箱 / 做饭 / 设置三个标签页
 struct RootView: View {
     @State private var selection: AppTab = Self.initialTab // 默认选中fridge标签
+    @State private var toast: Toast? // 底部提示(比如扣减完成后),几秒后自动消失
 
     var body: some View {
         TabView(selection: $selection) {
@@ -33,6 +34,25 @@ struct RootView: View {
             .tag(AppTab.settings)
         }
         .tint(Color.ink) // 设置标签颜色
+        .overlay(alignment: .bottom) {
+            if let toast {
+                ToastView(message: toast.message)
+                    .padding(.bottom, 96) // 浮在 Tab 栏上方
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .task(id: toast.id) {
+                        try? await Task.sleep(for: .seconds(1.8))
+                        withAnimation { self.toast = nil }
+                    }
+            }
+        }
+        .environment(\.showToast) { message in
+            withAnimation(.spring(duration: 0.3)) { toast = Toast(message: message) }
+        }
+    }
+
+    private struct Toast: Equatable {
+        let id = UUID()
+        let message: String
     }
 
     // 创建标签样式，选中使用selectedIcon，没选中使用icon
@@ -58,8 +78,9 @@ struct RootView: View {
 }
 
 #Preview {
-    RootView()
-        .modelContainer(PreviewData.container())
+    let container = PreviewData.container()
+    return RootView()
+        .modelContainer(container)
         .environment(AISettings())
-        .environment(MenuStore(fileURL: nil))
+        .environment(PreviewData.menuStore(for: container))
 }

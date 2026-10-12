@@ -33,6 +33,14 @@ final class MenuStore {
         }
     }
 
+    #if DEBUG
+    /// In-memory store pre-filled with a result (previews, `-useSampleData`).
+    init(fileURL: URL?, result: MenuResult?) {
+        self.fileURL = fileURL
+        self.result = result
+    }
+    #endif
+
     func generate(_ request: Request, items: [FoodItem], settings: AISettings) {
         task?.cancel()
         self.request = request

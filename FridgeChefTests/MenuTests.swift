@@ -171,3 +171,67 @@ struct MenuStoreTests {
         #expect(MenuStore(fileURL: nil).result == nil)
     }
 }
+
+@MainActor
+struct DeductionTests {
+    private func row(available: Double, amount: Double) -> DeductionRow {
+        DeductionRow(itemID: UUID(), name: "鸡蛋", unit: .item, available: available, amount: amount)
+    }
+
+    @Test func amountIsClampedAndSteppedByHalf() {
+        var r = row(available: 2, amount: 5)
+        #expect(r.amount == 2 && !r.canIncrease)
+        r.decrease(); r.decrease(); r.decrease(); r.decrease()
+        #expect(r.amount == 0.5 && !r.canDecrease)
+        r.increase()
+        #expect(r.amount == 1 && r.remaining == 1)
+
+        let small = row(available: 0.3, amount: 1)
+        #expect(small.amount == 0.3 && !small.canDecrease && !small.canIncrease)
+    }
+
+    @Test func removalThresholdIsAQuarter() {
+        #expect(row(available: 1, amount: 1).willRemove)                // 0 left
+        #expect(row(available: 0.7, amount: 0.5).willRemove)            // 0.2 left
+        #expect(!row(available: 0.75, amount: 0.5).willRemove)          // 0.25 left stays
+        var off = row(available: 1, amount: 1)
+        off.isOn = false
+        #expect(!off.willRemove)
+    }
+
+    @Test func rowsMergePlanIngredientsAndSkipMissingItems() {
+        let egg = FoodItem(name: "鸡蛋", category: .eggDairy, storage: .fridge, unit: .item, quantity: 6)
+        let gone = UUID()
+        let plan = MenuPlan(dishes: [
+            Dish(name: "a", ingredients: [
+                DishIngredient(itemID: egg.id, name: "鸡蛋", unit: .item, amount: 1, wasSoon: false),
+                DishIngredient(itemID: gone, name: "已删", unit: .item, amount: 1, wasSoon: false),
+            ], extras: [], steps: []),
+            Dish(name: "b", ingredients: [
+                DishIngredient(itemID: egg.id, name: "鸡蛋", unit: .item, amount: 2, wasSoon: false),
+            ], extras: [], steps: []),
+        ])
+        let rows = Deduction.rows(for: plan, items: [egg])
+        #expect(rows.map(\.name) == ["鸡蛋"])
+        #expect(rows[0].amount == 3 && rows[0].available == 6)
+    }
+
+    @Test func applyUpdatesRemovesAndSkipsUnchecked() {
+        let egg = FoodItem(name: "鸡蛋", category: .eggDairy, storage: .fridge, unit: .item, quantity: 6)
+        let milk = FoodItem(name: "牛奶", category: .eggDairy, storage: .fridge, unit: .box, quantity: 1)
+        let tofu = FoodItem(name: "豆腐", category: .semiPrepared, storage: .fridge, unit: .box, quantity: 1)
+        var tofuRow = DeductionRow(itemID: tofu.id, name: "豆腐", unit: .box, available: 1, amount: 1)
+        tofuRow.isOn = false
+        let rows = [
+            DeductionRow(itemID: egg.id, name: "鸡蛋", unit: .item, available: 6, amount: 2),
+            DeductionRow(itemID: milk.id, name: "牛奶", unit: .box, available: 1, amount: 1),
+            tofuRow,
+        ]
+        var removed: [String] = []
+        let summary = Deduction.apply(rows, to: [egg, milk, tofu]) { removed.append($0.name) }
+        #expect(summary == .init(deducted: 2, removed: 1))
+        #expect(egg.quantity == 4)
+        #expect(removed == ["牛奶"])
+        #expect(tofu.quantity == 1)
+    }
+}

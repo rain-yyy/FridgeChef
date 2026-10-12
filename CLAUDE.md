@@ -2,7 +2,7 @@
 
 - FridgeChef/:真正写代码的地方
   - FridgeChefApp.swift:App 的入口(ModelContainer 的 Schema 为 FoodItem;创建 AISettings、MenuStore 并通过 environment 注入;DEBUG 下启动参数 -useSampleData 改用内存中的示例数据,推荐结果也不落盘)
-  - RootView.swift:根视图,TabView(冰箱 / 做饭 / 设置);AppTab 枚举;Tab 选中态用 TabIcons 里填了蜂蜜黄的图标;选中的 tab 以 Binding 传给做饭页,用于「去设置」「去冰箱看看」跳转;DEBUG 启动参数 -debugTab cook|settings
+  - RootView.swift:根视图,TabView(冰箱 / 做饭 / 设置);AppTab 枚举;Tab 选中态用 TabIcons 里填了蜂蜜黄的图标;选中的 tab 以 Binding 传给做饭页,用于「去设置」「去冰箱看看」「扣减后回冰箱」跳转;底部 toast 浮层;DEBUG 启动参数 -debugTab cook|settings
   - Localizable.xcstrings:String Catalog(双语:en / zh-Hans)
   - Models/:数据模型
     - FoodItem.swift:@Model,食材(枚举以 raw 字符串存储,含 daysLeft)
@@ -26,6 +26,7 @@
     - CategoryBadge.swift:分类圆形徽章;FoodCategory 的 tint / icon
     - ExpiryTag.swift:过期标签胶囊;ExpiryStatus 的 tint / icon
     - FlowLayout.swift:自动换行布局(模型、食材标签)
+    - Toast.swift:底部提示;EnvironmentValues.showToast,由 RootView 提供
   - Views/Fridge/:冰箱 Tab(库存管理)
     - FridgeView.swift:冰箱页(顶部「+」、标题、搜索、冷藏/冷冻筛选、分组列表、左滑删除、空状态);DEBUG 启动参数 -debugOpenEditor add|<食材名> 直接打开编辑页,方便截图
     - FridgeSections.swift:StorageFilter + 分组逻辑(「尽快用掉」= 冷藏且 ≤2 天含已过期;其余按分类;组内按剩余天数,冷冻排最后)
@@ -34,10 +35,13 @@
     - ItemEditorSheet.swift:添加 / 编辑 Sheet(Form;保存并继续添加;删除带确认)
     - ItemDraft.swift:编辑页草稿和过期日规则(自动计算 / 手动修改 / 恢复默认 / 冷冻隐藏 / 编辑模式冷冻改冷藏从今天重算)
   - Views/Cook/:做饭 Tab
-    - CookView.swift:做饭页(自带 NavigationStack + CookRoute;菜系 / 人数用 @AppStorage 记住;快过期食材;未设置 Key 提示卡;查看上次推荐;底部生成按钮);DEBUG 启动参数 -debugGenerate YES 启动即生成
-    - ResultsView.swift:推荐菜单(骨架加载、网络 / AI 两种错误页、方案卡片、IngredientChip)
+    - CookView.swift:做饭页(自带 NavigationStack + CookRoute(results / plan);菜系 / 人数用 @AppStorage 记住;快过期食材;未设置 Key 提示卡;查看上次推荐;底部生成按钮);DEBUG 启动参数 -debugGenerate YES 启动即生成,-debugCookPath results|plan|deduct|confirm 直接打开对应页面(confirm 会自动确认扣减)
+    - ResultsView.swift:推荐菜单(骨架加载、网络 / AI 两种错误页、方案卡片可点进详情、IngredientChip)
+    - PlanDetailView.swift:方案详情(每道菜的冰箱食材和用量、需另备、步骤;底部「做完了」打开扣减)
+    - DeductSheet.swift:确认扣减 Sheet(逐项勾选、±0.5 调整、剩余 / 将移除提示;确认后回到冰箱 tab 并弹 toast)
+    - Deduction.swift:扣减纯逻辑(DeductionRow、按食材合并用量、剩余 < 0.25 移除、apply / summary)
   - Views/Settings/SettingsView.swift:设置页(API Key 显示 / 隐藏、模型 ID + 常用模型、测试连接、关于)
-  - Views/PreviewData.swift:DEBUG 示例数据(和设计稿一致),供 #Preview 和 -useSampleData 使用
+  - Views/PreviewData.swift:DEBUG 示例数据(食材 + 示例菜单,和设计稿一致),供 #Preview 和 -useSampleData 使用
   - Resources/Fonts/:ZCOOLKuaiLe-Regular.ttf + OFL.txt(字体许可)
   - Assets.xcassets/:资源目录
     - Colors/:全部颜色(每个都有浅色 / 深色两套值),代码里用 Color.cream / .paper / .ink / .cocoa / .honey / .onPastel 等
@@ -48,7 +52,7 @@
 - FridgeChefTests/:单元测试(Swift Testing,测试 struct 标 @MainActor)
   - FridgeChefTests.swift:ExpiryStatus、ShelfLifePreset
   - FridgeTests.swift:FridgeSections 分组 / 筛选 / 搜索,ItemDraft 过期日规则
-  - MenuTests.swift:MenuPrompt 候选和解析、AIError 映射、OpenRouterClient(StubURLProtocol 离线模拟)、MenuStore 持久化
+  - MenuTests.swift:MenuPrompt 候选和解析、AIError 映射、OpenRouterClient(StubURLProtocol 离线模拟)、MenuStore 持久化、Deduction 扣减(0.5 步进、0.25 移除阈值、合并、跳过已删除食材)
 
 - scripts/gen_assets.py:从 Design/ 设计稿生成 Colors / Icons / TabIcons / Illustrations 和 AccentColor(改颜色就改脚本里的 COLORS 再运行 python3 scripts/gen_assets.py,不要手改生成的 Contents.json)
 

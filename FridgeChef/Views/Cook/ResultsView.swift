@@ -52,7 +52,10 @@ struct ResultsView: View {
                 .padding(.horizontal, 2)
 
                 ForEach(Array(result.plans.enumerated()), id: \.element.id) { index, plan in
-                    PlanCard(plan: plan, index: index)
+                    NavigationLink(value: CookRoute.plan(plan.id)) {
+                        PlanCard(plan: plan, index: index)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal, 20)
@@ -97,6 +100,10 @@ private struct PlanCard: View {
                         .foregroundStyle(Color.cocoa)
                 }
                 Spacer()
+                Image(.iconForward)
+                    .resizable()
+                    .frame(width: 16, height: 16)
+                    .foregroundStyle(Color.cocoa)
             }
 
             VStack(alignment: .leading, spacing: 4) {
@@ -289,9 +296,10 @@ private struct MenuErrorView: View {
 }
 
 #Preview("Results") {
-    let store = MenuStore(fileURL: nil)
+    let container = PreviewData.container()
+    let store = PreviewData.menuStore(for: container)
     return NavigationStack { ResultsView(selectedTab: .constant(.cook)) }
-        .modelContainer(PreviewData.container())
+        .modelContainer(container)
         .environment(AISettings())
         .environment(store)
 }
