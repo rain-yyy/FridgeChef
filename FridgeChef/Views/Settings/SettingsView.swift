@@ -9,6 +9,8 @@ struct SettingsView: View {
 
     @Environment(AISettings.self) private var settings
     @State private var keyRevealed = false
+    /// Width of the "API Key" / "Model ID" labels, scaled with Dynamic Type.
+    @ScaledMetric private var labelWidth: CGFloat = 76
     @State private var testState: TestState = .idle
 
     var body: some View {
@@ -16,7 +18,7 @@ struct SettingsView: View {
         Form {
             Section {
                 HStack(spacing: 10) {
-                    Text("settings.apiKey").frame(width: 76, alignment: .leading)
+                    Text("settings.apiKey").frame(width: labelWidth, alignment: .leading)
                     Group {
                         if keyRevealed {
                             TextField("settings.apiKey.placeholder", text: $settings.apiKey)
@@ -39,7 +41,7 @@ struct SettingsView: View {
                 }
 
                 HStack(spacing: 10) {
-                    Text("settings.model").frame(width: 76, alignment: .leading)
+                    Text("settings.model").frame(width: labelWidth, alignment: .leading)
                     TextField("settings.model.placeholder", text: $settings.model)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
@@ -97,6 +99,8 @@ struct SettingsView: View {
     private func modelChip(_ model: String, selected: Bool) -> some View {
         Button { settings.model = model } label: {
             Text(verbatim: model)
+                .lineLimit(1)
+                .truncationMode(.middle)
                 .font(.caption.weight(selected ? .semibold : .regular))
                 .foregroundStyle(selected ? Color.onPastel : Color.ink)
                 .padding(.horizontal, 10)
@@ -159,7 +163,9 @@ struct SettingsView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack { SettingsView() }
         .environment(AISettings())
 }
+#endif

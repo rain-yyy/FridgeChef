@@ -166,7 +166,7 @@ private struct DeductRowCard: View {
     }
 
     private func amountText(_ value: Double) -> String {
-        "\(value.formatted()) \(String(localized: row.unit.displayName))"
+        row.unit.amountText(value)
     }
 
     private func stepButton(_ symbol: String, label: LocalizedStringKey, enabled: Bool, action: @escaping () -> Void) -> some View {
@@ -183,9 +183,11 @@ private struct DeductRowCard: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let container = PreviewData.container()
     let store = PreviewData.menuStore(for: container)
     return DeductSheet(plan: store.result!.plans[0], planLabel: MenuPlan.label(at: 0)) { _ in }
         .modelContainer(container)
 }
+#endif

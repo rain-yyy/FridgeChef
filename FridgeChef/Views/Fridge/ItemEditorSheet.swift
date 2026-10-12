@@ -178,6 +178,7 @@ struct ItemEditorSheet: View {
     }
 }
 
+#if DEBUG
 #Preview("Add") {
     ItemEditorSheet(item: nil)
         .modelContainer(PreviewData.container(empty: true))
@@ -189,3 +190,4 @@ struct ItemEditorSheet: View {
     return ItemEditorSheet(item: item)
         .modelContainer(container)
 }
+#endif

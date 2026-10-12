@@ -67,3 +67,20 @@ struct ShelfLifePresetTests {
         #expect(frozen.expiryStatus == .frozen)
     }
 }
+
+@MainActor
+struct QuantityUnitTests {
+    @Test func amountTextUsesSingularOnlyForExactlyOne() {
+        let en = Locale(identifier: "en")
+        func text(_ unit: QuantityUnit, _ amount: Double) -> String {
+            let name = amount == 1 ? unit.displayName : unit.pluralName
+            var resource = name
+            resource.locale = en
+            return "\(amount.formatted()) \(String(localized: resource))"
+        }
+        #expect(text(.piece, 1) == "1 piece")
+        #expect(text(.piece, 2) == "2 pieces")
+        #expect(text(.box, 0.5) == "0.5 boxes")
+        #expect(QuantityUnit.bunch.amountText(1).hasPrefix("1 "))
+    }
+}

@@ -97,13 +97,16 @@ private struct DishCard: View {
     let dish: Dish
     let number: Int
 
+    @ScaledMetric private var numberSize: CGFloat = 30
+    @ScaledMetric(relativeTo: .subheadline) private var stepSize: CGFloat = 22
+
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 10) {
                 Text(verbatim: "\(number)")
                     .font(.subheadline.weight(.bold))
                     .foregroundStyle(Color.onPastel)
-                    .frame(width: 30, height: 30)
+                    .frame(width: numberSize, height: numberSize)
                     .background(Color.honey, in: Circle())
                     .overlay(Circle().strokeBorder(Color.ink, lineWidth: 1.5))
                 Text(dish.name).font(.handwritten(21))
@@ -155,7 +158,7 @@ private struct DishCard: View {
                         HStack(alignment: .firstTextBaseline, spacing: 10) {
                             Text(verbatim: "\(offset + 1)")
                                 .font(.caption.weight(.bold))
-                                .frame(width: 22, height: 22)
+                                .frame(width: stepSize, height: stepSize)
                                 .overlay(Circle().strokeBorder(Color.ink, lineWidth: 1.5))
                                 .alignmentGuide(.firstTextBaseline) { $0[VerticalAlignment.center] + 5 }
                             Text(verbatim: step)
@@ -199,6 +202,7 @@ private struct DottedLeader: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let container = PreviewData.container()
     let store = PreviewData.menuStore(for: container)
@@ -207,3 +211,4 @@ private struct DottedLeader: View {
     }
     .modelContainer(container)
 }
+#endif

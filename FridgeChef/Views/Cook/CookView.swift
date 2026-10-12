@@ -277,9 +277,11 @@ struct DashedDivider: View {
     }
 }
 
+#if DEBUG
 #Preview {
     CookView(selectedTab: .constant(.cook))
         .modelContainer(PreviewData.container())
         .environment(AISettings())
         .environment(MenuStore(fileURL: nil))
 }
+#endif

@@ -5,10 +5,10 @@
   - RootView.swift:根视图,TabView(冰箱 / 做饭 / 设置);AppTab 枚举;Tab 选中态用 TabIcons 里填了蜂蜜黄的图标;选中的 tab 以 Binding 传给做饭页,用于「去设置」「去冰箱看看」「扣减后回冰箱」跳转;底部 toast 浮层;DEBUG 启动参数 -debugTab cook|settings
   - Localizable.xcstrings:String Catalog(双语:en / zh-Hans)
   - Models/:数据模型
-    - FoodItem.swift:@Model,食材(枚举以 raw 字符串存储,含 daysLeft)
+    - FoodItem.swift:@Model,食材(id: UUID 供推荐结果关联;枚举以 raw 字符串存储;daysLeft、expiryStatus;init 未传过期日时按预设计算)
     - FoodCategory.swift:分类枚举(meat、semiPrepared、vegetable、eggDairy)
     - StorageLocation.swift:存放位置枚举(fridge、freezer)
-    - QuantityUnit.swift:单位枚举(piece、head、item、box、bunch、bag)
+    - QuantityUnit.swift:单位枚举(piece、head、item、box、bunch、bag);amountText(_:) 统一格式化「数量 + 单位」(英文恰好为 1 用单数,其余用 unit.*.plural)
     - ExpiryStatus.swift:过期状态枚举(expired / today / tomorrow / soon / ok / frozen / unknown),由存放位置和 daysLeft 推导
     - ShelfLifePreset.swift:预设保质期表(先按名字查,再按分类默认值;冷冻返回 nil)
     - MenuPlan.swift:Cuisine 枚举;MenuResult / MenuPlan / Dish / DishIngredient(Codable,食材按 FoodItem.id 关联,并快照名称、单位和是否快过期)
@@ -25,7 +25,7 @@
     - PageHeader.swift:Tab 根页面的大标题(快乐体 34 + 图标 + 说明);.handwrittenInlineTitle() 用于 push 页面
     - CategoryBadge.swift:分类圆形徽章;FoodCategory 的 tint / icon
     - ExpiryTag.swift:过期标签胶囊;ExpiryStatus 的 tint / icon
-    - FlowLayout.swift:自动换行布局(模型、食材标签)
+    - FlowLayout.swift:自动换行布局(模型、食材标签);超宽的子视图按行宽给尺寸,可截断或换行
     - Toast.swift:底部提示;EnvironmentValues.showToast,由 RootView 提供
   - Views/Fridge/:冰箱 Tab(库存管理)
     - FridgeView.swift:冰箱页(顶部「+」、标题、搜索、冷藏/冷冻筛选、分组列表、左滑删除、空状态);DEBUG 启动参数 -debugOpenEditor add|<食材名> 直接打开编辑页,方便截图
@@ -56,18 +56,27 @@
 
 - scripts/gen_assets.py:从 Design/ 设计稿生成 Colors / Icons / TabIcons / Illustrations 和 AccentColor(改颜色就改脚本里的 COLORS 再运行 python3 scripts/gen_assets.py,不要手改生成的 Contents.json)
 
-- docs/:设计文档(design-spec.md、MVP.md、plans/)和 Excalidraw 架构图(architecture.excalidraw)
+- docs/:设计文档(design-spec.md 设计定稿、MVP.md 范围与进度)和 Excalidraw 架构图(architecture.excalidraw)
 
 - FridgeChef.xcodeproj/:Xcode 项目配置
   - project.pbxproj: 项目的核心配置
   - project.xcworkspace/: 工作区描述
   - xcuserdata/: 个人的xcode配置
 
+## Build & Test
+
+- 测试:xcodebuild test -project FridgeChef.xcodeproj -scheme FridgeChef -destination 'platform=iOS Simulator,name=iPhone 17'
+- Release 编译检查:xcodebuild build -project FridgeChef.xcodeproj -scheme FridgeChef -configuration Release -destination 'generic/platform=iOS Simulator'
+- 模拟器截图常用启动参数(仅 DEBUG):-useSampleData、-debugTab、-debugOpenEditor、-debugCookPath、-debugGenerate YES、-debugAPIKey <key>、-ai.model <模型ID>
+
 ## Conventions
 
 - 最低系统版本 iOS 17.0;UI 用 SwiftUI,持久化用 SwiftData
 - 枚举的 displayName 返回 LocalizedStringResource,用于中英双语
 - 枚举在 FoodItem 里存 raw 字符串(categoryRaw 等),因为 #Predicate 按枚举筛选不稳定
+- #Preview 一律包在 #if DEBUG 里(PreviewData 只在 DEBUG 存在,否则 Release 构建失败);改完后用 -configuration Release 编译确认
+- 显示「数量 + 单位」一律用 QuantityUnit.amountText(_:),不要自己拼字符串
+- 固定尺寸的圆点 / 列宽用 @ScaledMetric,跟随动态字体;新颜色要在浅色和深色下都检查文字对比度(正文 ≥ 4.5)
 - 颜色和图标一律用 Asset 自动生成的符号(Color.ink、Image(.iconAdd)),不写死十六进制;画在粉彩 / 蜂蜜黄底上的文字和图标用 .onPastel
 - API Key 只存钥匙串,绝不写进代码、文档、UserDefaults 或 git;本地测试用 DEBUG 启动参数 -debugAPIKey
 - AI 返回内容一律经过 MenuPrompt.parse 校验后才使用;新增 AI 字段时同时更新 responseFormat(严格 schema)和 Raw* 解码结构

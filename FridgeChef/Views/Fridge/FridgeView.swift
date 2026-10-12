@@ -178,6 +178,7 @@ struct FridgeView: View {
     }
 }
 
+#if DEBUG
 #Preview("With items") {
     NavigationStack { FridgeView() }
         .modelContainer(PreviewData.container())
@@ -187,3 +188,4 @@ struct FridgeView: View {
     NavigationStack { FridgeView() }
         .modelContainer(PreviewData.container(empty: true))
 }
+#endif

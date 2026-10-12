@@ -35,7 +35,7 @@ COLORS = {
     "HoneySoft":    ("#FBEBC4", "#4A3D22"),  # notice card background (e.g. "API key not set")
     "InkSoft":      ("#5E5148", "#D8CBB9"),  # body text on HoneySoft
     "OnPastel":     ("#3A2E28", "#2A211C"),  # text/icons drawn on pastel or honey fills
-    "Expired":      ("#EE8C7E", "#C9695C"),
+    "Expired":      ("#EE8C7E", "#D2766A"),
     "Soon":         ("#F9C79A", "#D9A574"),
     "Frozen":       ("#C7DDF0", "#9DB8D1"),
     "CatMeat":      ("#F6CFCB", "#C99B97"),
@@ -45,7 +45,7 @@ COLORS = {
     "ControlFill":  ("#EFE7DC", "#3A302A"),  # segmented / stepper / disabled fill
     "WeakStroke":   ("#B9AA9C", "#6E6158"),  # neutral tag border
     "Hairline":     ("#D9CDBF", "#4A3F38"),  # dashed dividers
-    "DisabledText": ("#8A7C70", "#7C6E62"),
+    "DisabledText": ("#8A7C70", "#96887B"),
     "DisabledStroke": ("#CDBFB0", "#55493F"),
 }
 

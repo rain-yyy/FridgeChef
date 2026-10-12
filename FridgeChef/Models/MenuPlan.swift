@@ -72,6 +72,6 @@ struct DishIngredient: Codable, Equatable {
     var wasSoon: Bool
 
     var amountText: String {
-        "\(amount.formatted()) \(String(localized: unit.displayName))"
+        unit.amountText(amount)
     }
 }

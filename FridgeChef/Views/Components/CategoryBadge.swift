@@ -39,6 +39,7 @@ struct CategoryBadge: View {
     }
 }
 
+#if DEBUG
 #Preview {
     HStack {
         ForEach(FoodCategory.allCases) { CategoryBadge(category: $0) }
@@ -46,3 +47,4 @@ struct CategoryBadge: View {
     .padding()
     .background(Color.cream)
 }
+#endif

@@ -77,6 +77,7 @@ struct RootView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let container = PreviewData.container()
     return RootView()
@@ -84,3 +85,4 @@ struct RootView: View {
         .environment(AISettings())
         .environment(PreviewData.menuStore(for: container))
 }
+#endif

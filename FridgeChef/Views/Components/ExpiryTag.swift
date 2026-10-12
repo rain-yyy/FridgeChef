@@ -47,6 +47,7 @@ struct ExpiryTag: View {
     }
 }
 
+#if DEBUG
 #Preview {
     VStack(alignment: .leading) {
         ExpiryTag(status: .expired(days: 1))
@@ -57,3 +58,4 @@ struct ExpiryTag: View {
     .padding()
     .background(Color.cream)
 }
+#endif

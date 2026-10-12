@@ -49,7 +49,7 @@ enum MenuPrompt {
             - Reply with JSON only, matching the given schema.
             """
         let lines = candidates.map { c in
-            var parts = [c.ref, c.name, "\(c.quantity.formatted()) \(String(localized: c.unit.displayName))"]
+            var parts = [c.ref, c.name, c.unit.amountText(c.quantity)]
             if c.storage == .freezer {
                 parts.append("frozen")
             } else if let days = c.daysLeft {

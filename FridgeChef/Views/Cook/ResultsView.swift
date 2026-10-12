@@ -295,6 +295,7 @@ private struct MenuErrorView: View {
     }
 }
 
+#if DEBUG
 #Preview("Results") {
     let container = PreviewData.container()
     let store = PreviewData.menuStore(for: container)
@@ -303,3 +304,4 @@ private struct MenuErrorView: View {
         .environment(AISettings())
         .environment(store)
 }
+#endif

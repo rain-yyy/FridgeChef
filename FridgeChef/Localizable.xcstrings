@@ -2477,6 +2477,23 @@
         }
       }
     },
+    "unit.bag.plural": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "bags"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "袋"
+          }
+        }
+      }
+    },
     "unit.box": {
       "extractionState": "manual",
       "localizations": {
@@ -2484,6 +2501,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "box"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "盒"
+          }
+        }
+      }
+    },
+    "unit.box.plural": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "boxes"
           }
         },
         "zh-Hans": {
@@ -2511,6 +2545,23 @@
         }
       }
     },
+    "unit.bunch.plural": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "bunches"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把"
+          }
+        }
+      }
+    },
     "unit.head": {
       "extractionState": "manual",
       "localizations": {
@@ -2518,6 +2569,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "head"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "颗"
+          }
+        }
+      }
+    },
+    "unit.head.plural": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "heads"
           }
         },
         "zh-Hans": {
@@ -2545,6 +2613,23 @@
         }
       }
     },
+    "unit.item.plural": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "pcs"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "个"
+          }
+        }
+      }
+    },
     "unit.piece": {
       "extractionState": "manual",
       "localizations": {
@@ -2552,6 +2637,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "piece"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "块"
+          }
+        }
+      }
+    },
+    "unit.piece.plural": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "pieces"
           }
         },
         "zh-Hans": {
